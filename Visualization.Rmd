@@ -1,0 +1,191 @@
+---
+title: "Visualization"
+output: word_document
+---
+
+```{r setup, include=FALSE,cache=FALSE,message=FALSE, warning=FALSE, comment=NA}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r age, echo = FALSE, cache=FALSE,message=FALSE, warning=FALSE, comment=NA}
+df <- read.csv("G:\\Viewoo.in\\Graph Project\\Employee.csv")
+library(ggplot2)
+library(gmodels)	
+breaks = seq(18, 60, by = 7)
+bins <-cut(df$Age , breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Age")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ggtitle("Age vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Attrition rate stabilises after the age of 31 and the age group of 18-24 has highest attrition rate")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=BusinessTravel,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("BusinessTravel")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ggtitle("BusinessTravel vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+
+CrossTable(df$BusinessTravel, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(102, 1680, by = 280)
+bins <-cut(df$DailyRate, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("DailyRate")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Daily Rate vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+ print("Attrition gradually decreases with daily rate")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+
+ggplot(df, aes(x=Department,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Department")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Department vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+ print("Research and Development team has the lowest attrition rate")
+CrossTable(df$Department, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(1,31, by = 6)
+bins <-cut(df$DistanceFromHome, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Distance")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Distance vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("The distance from home ranging 1-6 has lowest attrition rate")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+
+ggplot(df, aes(x=Education,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Education")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Education vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+ print("There is not very significant effect on the attrition and it remains nearly same for all education divisions")
+CrossTable(df$Education, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=EducationField,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("EducationField")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Education Field vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("The highest attrition is in the field of human resources")
+CrossTable(df$EducationField, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(1,2068, by = 414)
+bins <-cut(df$EmployeeNumber, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("EmployeeNumber")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Employee Number vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Employee number does not signifies attrition")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=EnvironmentSatisfaction,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("EnvironmentSatisfaction")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("EnvironmentSatisfaction vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("As satisfaction increases, attrition decreases")
+CrossTable(df$EnvironmentSatisfaction, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=Gender,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Gender")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Gender vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("The attrition rate for females is less as compared to males")
+CrossTable(df$Gender, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(30, 100, by = 14)
+bins <-cut(df$HourlyRate, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("HourlyRate")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("HourlyRate vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("There is not that much significant effect on attrition")
+ CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=JobInvolvement,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Job Involvement")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Job Involvement vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("As job involvement increases, attrition goes down")
+CrossTable(df$JobInvolvement, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=JobRole,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Job Role")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Job Role vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Attrition rate is highest for Sales Representative as compared to others")
+CrossTable(df$JobRole, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=JobSatisfaction,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Job Satisfaction")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Job Satisfaction vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("The attrition rate is lowest for job satisfaction level 4")
+CrossTable(df$JobSatisfaction, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=MaritalStatus,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Marital Status")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Marital Status vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("People with marital status as single have highest attrition rate")
+CrossTable(df$MaritalStatus, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(1009, 22788, by = 3798)
+bins <-cut(df$MonthlyIncome, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Monthly Income")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Monthly Income vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+ print("As monthly incomes increases, attrition rate goes down") 
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(2094, 29886, by = 4981)
+bins <-cut(df$MonthlyRate, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Monthly Rate")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Monthly Rate vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+ print("There is not that much significant effect on attrition")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(0, 9, by = 2)
+bins <-cut(df$NumCompaniesWorked, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Number of Companies Worked")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Number of Companies Worked vs Attrition")+
+ theme(plot.title = element_text(hjust = 0.5))
+print("The attrition level is lowest with people who have worked in 2 or 3 companies")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=OverTime,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("OverTime")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("OverTime vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("The people who are not doing overtime has low attrition level")
+CrossTable(df$OverTime, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(11, 30, by = 3)
+bins <-cut(df$PercentSalaryHike, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Present Salary Hike")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Present Salary Hike vs Attrition")+
+theme(plot.title = element_text(hjust = 0.5))
+print("The attrition level for Percent Salary Hikes does not has significant effect")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=PerformanceRating,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Performance Rating")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Performance Rating vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Both performance rating has nearly same effect on attrition")
+CrossTable(df$PerformanceRating, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=RelationshipSatisfaction,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Relationship Satisfaction")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Relationship Satisfaction vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("There is no significant effect on attrition")
+CrossTable(df$RelationshipSatisfaction, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=StockOptionLevel,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Stock Option Level")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Stock Option Level vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("The attrition is lowest at stock option level 2")
+CrossTable(df$StockOptionLevel, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(0, 42, by = 3)
+bins <-cut(df$TotalWorkingYears, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Total Working Years")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Total Working Years vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Attrtion rate is decreasing with increase in total working years")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=TrainingTimesLastYear,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Training Times Last Year")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Training Times Last Year vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+CrossTable(df$TrainingTimesLastYear, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+ggplot(df, aes(x=WorkLifeBalance,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Work Life Balance")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Work Life Balance vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("There is an significant decrease in attrition rate after Work life balance of level 1")
+CrossTable(df$WorkLifeBalance, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(0, 48, by = 8)
+bins <-cut(df$YearsAtCompany, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Years At Company")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Years At Company vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("People who have spent 0-8 years at a company has highest attrition rate")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(0, 18, by = 4)
+bins <-cut(df$YearsInCurrentRole, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Years In Current Role")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Years In Current Role vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Years ranging from 0-4 in current role has highest attrition rate")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(0, 18, by = 3)
+bins <-cut(df$YearsSinceLastPromotion, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Years Since Last Promotion")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Years Since Last Promotion vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Years ranging from 0-3 since last promotion has highest attrition rate")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
+
+breaks = seq(0, 17, by = 4)
+bins <-cut(df$YearsWithCurrManager, breaks, include.lowest = T, right=FALSE)
+ggplot(df, aes(x=bins,y=as.numeric(Attrition),fill=Attrition)) + geom_bar(aes(col = Attrition), stat = "identity") + xlab("Years With Current Manager")+ylab("Attrition") + scale_y_continuous(labels = function(Attrition) paste0(Attrition/10, "%"),limits = c(0,1000))+ ggtitle("Years With Current Manager vs Attrition")+
+  theme(plot.title = element_text(hjust = 0.5))
+print("Years ranging from 0-4 for a current manager has highest attrition rate")
+CrossTable(bins, df$Attrition,prop.r=TRUE,prop.c=FALSE, prop.t=FALSE, prop.chisq=FALSE, chisq = FALSE,  resid=TRUE, sresid=TRUE, asresid=FALSE)
